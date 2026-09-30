@@ -1,3 +1,3 @@
 def call(){
-  sh "trivy fs --skip-version-check --severity HIGH,CRITICAL . | tee trivy-fs-report.txt"
+  sh "trivy fs --skip-version-check --severity HIGH,CRITICAL -o trivy-fs-report.txt . && cat trivy-fs-report.txt"
 }
