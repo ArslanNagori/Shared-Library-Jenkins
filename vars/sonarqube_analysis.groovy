@@ -1,5 +1,6 @@
-def call(String SonarQubeAPI, String Projectname, String ProjectKey){
-  withSonarQubeEnv("${SonarQubeAPI}"){
-      sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=${Projectname} -Dsonar.projectKey=${ProjectKey} -X"
+def call(String sonarServer, String projectName, String projectKey, String scannerTool = 'Sonar'){
+  def scannerHome = tool scannerTool
+  withSonarQubeEnv(sonarServer){
+    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectName=${projectName} -Dsonar.projectKey=${projectKey} -Dsonar.sources=. -Dsonar.exclusions=dependency-check-report.*,trivy-fs-report.txt,**/node_modules/**,.scannerwork/**"
   }
 }
